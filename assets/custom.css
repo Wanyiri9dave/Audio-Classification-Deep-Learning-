@@ -1,0 +1,60 @@
+/* Custom Streamlit app styles - safe selectors using data-testid attributes */
+
+/* Background image (remote) */
+[data-testid="stAppViewContainer"] {
+  background-image: url("https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1950&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Dark overlay to improve readability */
+[data-testid="stAppViewContainer"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ensure Streamlit main container sits above overlay */
+[data-testid="stAppViewContainer"] > [data-testid="stToolbar"] + div {
+  position: relative;
+  z-index: 1;
+}
+
+/* Card-like content area */
+.block-container {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  padding: 1rem 1.5rem !important;
+  border-radius: 10px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Improve contrast for headings */
+h1,
+h2,
+h3,
+.stMarkdown,
+.streamlit-expanderHeader {
+  color: #0b1220 !important;
+}
+
+/* Tidy buttons */
+button {
+  border-radius: 8px !important;
+}
+
+/* Sidebar readability */
+.css-1d391kg,
+.css-1d391kg * {
+  color: #0b1220 !important;
+}
+
+/* Small screens: reduce padding */
+@media (max-width: 640px) {
+  .block-container {
+    padding: 0.5rem !important;
+  }
+}

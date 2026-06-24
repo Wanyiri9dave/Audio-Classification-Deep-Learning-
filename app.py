@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_wavesurfer import wavesurfer
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -7,12 +8,44 @@ import os
 from source_.model import AudioCNN
 from source_.pipeline import extract_features
 
+
 # 1. Page Configuration & UI Styling
 st.set_page_config(
     page_title="Urban Sound Classifier", 
     page_icon="🔊", 
     layout="centered"
 )
+
+# --- BACKGROUND IMAGE INJECTION ---
+def set_bg_image():
+    # Use a high-quality, dark acoustic or abstract engineering wave background URL
+    bg_img_url = "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1920"
+    
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), url("{bg_img_url}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        
+        /* Make content boxes readable over the background */
+        .stMarkdown, .stFileUploader, div[data-testid="stAudio"] {{
+            background-color: rgba(20, 20, 20, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Run the function to apply the styling
+set_bg_image()
 
 st.title("🔊 Real-Time Urban Sound Classifier")
 st.write(
@@ -41,8 +74,15 @@ model, device = load_deep_learning_model()
 uploaded_file = st.file_uploader("Choose an environmental sound file (.wav)...", type=["wav"])
 
 if uploaded_file is not None:
-    st.markdown("### 🎧 Play Audio Clip")
-    st.audio(uploaded_file, format='audio/wav')
+    st.markdown("### 🎧 Play Audio")
+    
+    # Reset file pointer to read from the start
+    uploaded_file.seek(0)
+    audio_bytes = uploaded_file.read()
+    
+    # Render the interactive WhatsApp-style scrubbing waveform
+    wavesurfer(audio_bytes, regions=[])         # Height matching your spectrogram matrix geom)
+    uploaded_file.seek(0)
     
     # 4. Trigger Classification on Button Click
     if st.button("🚀 Analyze Acoustic Signature"):
