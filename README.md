@@ -4,7 +4,7 @@ A production-ready deep learning pipeline that transforms raw audio waveforms in
 
 ---
 ## 👥 Collaboration & Acknowledgments
-This ecosystem was co-developed in collaboration with [https://github.com/lailaabdikarim36-gif]. 
+This ecosystem was co-developed in collaboration with **[Layla Abdikarim](https://github.com/laylas-github-username)**. 
 * **Core Responsibilities:** I engineered the modular backend architecture (`src/`), implemented the PyTorch 2D CNN model, and built the Streamlit deployment interface.
 * **Collaborative Focus:** Jointly iterated on hyperparameter tuning and analyzed the classification report to diagnose model blind spots.
 
